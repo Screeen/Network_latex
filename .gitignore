@@ -1,0 +1,13 @@
+*.toc
+*.gz
+*.out
+*.bbl
+*.aux
+*.thm
+*.pdf
+*.blg
+img/batch.PNG
+img/cvxPrimalTable.PNG
+img/notCVX_constr.PNG
+img/cvxrlogo.png
+img/feasibility.PNG

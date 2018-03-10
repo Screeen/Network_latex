@@ -1,0 +1,64 @@
+\usepackage[english]{babel}
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage{cool} %seems cool. has bugs. conflicts with own derivative commands (below)
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{subfiles}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{appendix}
+\usepackage{rotating}
+\pagestyle{fancy}
+
+%Packages and settings for code formatting
+\usepackage{color}
+\definecolor{code_keywords}   {rgb}{0,0,0} %blue={0.13,0.13,0.75}
+\definecolor{code_comments}   {rgb}{0.17,0.57,0.17}
+\definecolor{code_linenumbers}{rgb}{0.5,0.5,0.5}
+\definecolor{code_strings}    {rgb}{0,0,0} %red={0.5,0,0}
+\usepackage{listings}
+\lstset{
+	language		 = Matlab,
+	basicstyle		 = \footnotesize,
+	commentstyle	 = \color{code_comments},
+	keywordstyle	 = \bfseries\color{code_keywords},
+	stringstyle		 = \color{code_strings},
+	numberstyle		 = \tiny\color{code_linenumbers},
+	frame			 = none,
+	keepspaces		 = true,
+	numbers			 = left,
+	numbersep		 = 5pt,
+	showspaces		 = false,
+	showstringspaces = false,
+	showtabs		 = false,
+	stepnumber		 = 1,
+	tabsize			 = 4,
+}
+
+
+\lfoot{} % Controls the left corner of the footer
+\cfoot{} % Controls the center of the footer
+\rfoot{page~\thepage} % Controls the right corner of the footer
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%Specify table columns' width
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO]}~#1}}
+
+\newcommand{\imp}{\Rightarrow} %mathematical "implies"
+\newcommand{\Imp}{\quad\imp\quad} %...with spacing

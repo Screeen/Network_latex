@@ -93,8 +93,17 @@ Lastly, some spectral metrics of the aggregated graph are considered. The spectr
 
 
 \subsection*{Part B: Information spreading on a temporal network}
-9) Taking all the N iterations into count, plot the average number of infected nodes E[I(t)] together with
-its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
+%9) Taking all the N iterations into count, plot the average number of infected nodes E[I(t)] together with
+%its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
+
+As mentioned in the introduction, each edge was labeled with the timestamp at which the contact between students it represents was made. This means we can simulate the spread of information over the network over time. The information spreading process used is as follows: an infected node can infect any nodes it is in contact with (i.e. its neighbours at a specific timestamp), but these neighbours can only start infecting other nodes at the next timestamp. Infection starts with some selected seed node. This simulation is done N times; every node is a seed node once. Graphs of the number of infected nodes \(I(t)\) will show the average \(E[I(t)]\) as well as the standard deviation \(\sqrt{Var[I(t)]}\) over these N simulations.
+
+One metric used to quantify how fast information spreads over the temporal network is the timestamp at which 80\% of all nodes have been infected. For every simulation the seed node and timestamp of 80\% infection is recorded. By sorting the seed nodes by their 80\% infection timestamps, the nodes are ranked according to their influence as a seed node. Let's call this ranking \(R=[R_{(1)}, R_{(2)}, ..., R_{(N)}]\). This ordering can now be used as a standard to quantify nodes' influence. Using the same process nodes can be ranked using other metrics (e.g. the degree, \(D=[D_{(1)}, D_{(2)}, ..., D_{(N)}]\)) and subsequently compared with R by checking how many nodes are in the same top-f fraction for both metrics, R and D. This is called the top-f recognition rate and is calculated as:
+\begin{align*}
+	r_{RD}(f) = \frac{\left|R_f \cap D_f\right|}{\left|R_f\right|}
+\end{align*}
+
+Several metrics are compared to R using this procedure. The results can be found in figure \ref{fig:???}. \todo{figure and reference + conclusions from figure}
 
 \begin{figure}[ht!]
   \centering

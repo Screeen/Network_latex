@@ -91,7 +91,7 @@ its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
 
 \begin{figure}[ht!]
   \centering
-   \includegraphics[width=\textwidth]{img/infections_G_data.png}
+   \includegraphics[width=\textwidth]{img/infections_G.png}
    \caption{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$, 
  on the temporal graph $G_{data}$. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area.}
    \label{fig:infections_G}
@@ -123,9 +123,9 @@ its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
 
 \begin{figure}[ht!]
   \centering
-   \includegraphics[width=0.8\textwidth]{img/rank_G.png}
+   \includegraphics[width=0.8\textwidth]{img/rankG.png}
    \caption{The top $f$ recognition rate $r_RX(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$, where $R_f$ and $X_f$ are the sets of nodes ranking in the top $f$ fraction according to their influence,  or to another metric $X(f)$, respectively. The metrics based on the temporal features are more accurate in detecting the most influential seed nodes.}
-   \label{fig:rank_G}
+   \label{fig:rankG}
 \end{figure}
 
 
@@ -150,6 +150,54 @@ its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
 %your observation. For example, which temporal network features could possibly explain the different spreading
 %performance on these temporal networks?
 \todo{}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/infections_G.png}
+        \caption{a}
+	    \label{fig:degree_distribution_linlin}
+    \end{subfigure}
+%    ~ % spacing
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/infections_G2.png}
+        \caption{b}
+	    \label{fig:degree_distribution_loglog}
+    \end{subfigure}
+%     ~ % spacing
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/infections_G3.png}
+        \caption{c}
+	    \label{fig:degree_distribution_loglog}
+    \end{subfigure}
+    \caption{Degree distribution of nodes in the aggregated graph.}
+    \label{fig:degree_distribution}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/rankG.png}
+        \caption{a}
+	    \label{fig:degree_distribution_linlin}
+    \end{subfigure}
+%    ~ % spacing
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/rankG2.png}
+        \caption{b}
+	    \label{fig:degree_distribution_loglog}
+    \end{subfigure}
+%     ~ % spacing
+    \begin{subfigure}[b]{0.32\textwidth}
+        \includegraphics[width=\textwidth]{img/rankG3.png}
+        \caption{c}
+	    \label{fig:degree_distribution_loglog}
+    \end{subfigure}
+    \caption{Degree distribution of nodes in the aggregated graph.}
+    \label{fig:degree_distribution}
+\end{figure}
+
+
 
 
 \subsection*{Conclusion}

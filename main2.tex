@@ -22,26 +22,33 @@ This data not only includes contact information at a certain time, but also how 
 To begin with, this data will be aggregated over all time to analyse the topology of the resulting aggregated network. Secondly, the time of measurement will be taken into consideration. Several metrics will be used to analyse which nodes are most influential when information spreads across this temporal network. Lastly, temporal features of the network will be altered to inspect their influence on the information spreading process.
 
 \subsection*{Part A: Topological features of the aggregated network}
+\label{sec:partA}
 
+All measured topological features are summarized in table \ref{tab:topological_features}.
 
 %\setlength\LTleft{0pt} % left-align rather than center-set the longtable
-\begin{tabular}{l l}
-\textbf{Topological feature} & \textbf{Value} \\ 
-\midrule
-N & 327 \\
-L & 5818 \\ 
-p  & 0.1092 \\ 
-$E[D]$  & 35.58\\
-$Var[D]$ & 182.2 \\
-$\rho_D$ & 0.03318\\
-C & 0.5035\\
-$E[H]$ & 2.159\\
-$H_{max}$ & 4\\
-$\lambda_1$ & 41.23\\
-$\mu_{N-1}$ & 1.93\\
-\bottomrule
-\end{tabular}
-\bigskip
+\begin{table}[ht!]
+	\centering
+	\begin{tabular}{@{} L{10em} L{5em} R{2.5em} @{} L{2.5em} @{}}
+	\toprule
+	\textbf{Topological feature} & ~ & \multicolumn{2}{r}{\textbf{Value}}\\
+	\midrule
+	Number of nodes& N & 327& \\
+	Number of links& L & 5818& \\ 
+	Link density& p  & 0&.1092 \\ 
+	Average degree& $E[D]$  & 35&.58\\
+	Degree variance& $Var[D]$ & 182&.2 \\
+	Degree assortativity& $\rho_D$ & 0&.03318\\
+	Clustering coefficient& C & 0&.5035\\
+	Average hopcount& $E[H]$ & 2&.159\\
+	Diameter& $H_{max}$ & 4& \\
+	Spectral radius& $\lambda_1$ & 41&.23\\
+	Algebraic connectivity& $\mu_{N-1}$ & 1&.93\\
+	\bottomrule
+	\end{tabular}
+	\caption{List of all topological features examined for part \ref{sec:partA} and their values.}
+	\label{tab:topological_features}
+\end{table}
 
 The aggregated graph \(G\) is constructed by connecting any two nodes by an (unweighted) edge if the nodes make contact with eachother at least once in the \(T=7375\) timesteps available.
 
@@ -156,24 +163,6 @@ its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
 \todo{}
 
 
-
-%begin{table}[ht!]
-%	\centering
-%	\begin{tabular}{@{} L{9em} *{10}{R{1.75em}} @{}}
-%		\toprule
-%		instruction						& 1		& 2		& 3		& 4		& 5		& 6		& 7		& 8		& 9		& 10	\\
-%		\midrule
-%		\texttt{lw \$r2, 0(\$r1)}		& IF	& ID	& EX	& \underline{MEM}	& WB	& 		& 		& 		& 		& 		\\
-%										&		& NOP	& NOP	& NOP	& NOP	& NOP	& 		& 		& 		& 		\\
-%		\texttt{and \$r1, \$r2, \$r1}	& 		& 		& IF	& ID	& \underline{EX}	& MEM	& WB	& 		& 		& 		\\
-%		\texttt{lw \$r3, 0(\$r2)}		& 		& 		& 		& IF	& ID	& EX	& MEM	& WB	& 		& 		\\
-%		\texttt{lw \$r1, 0(\$r1)}		& 		& 		& 		& 		& IF	& ID	& EX	& MEM	& WB	& 		\\
-%		\texttt{sw \$r1, 0(\$r2)}		& 		& 		& 		& 		& 		& IF	& ID	& EX	& MEM	& WB	\\
-%		\bottomrule
-%	\end{tabular}
-%	\caption{Pipeline execution diagram for the code in the first column when the datapath does have a forwarding unit as well as hazard detection. Underlined stages indicate a forwarding connection between these stages. The total execution time is 10 clock cycles.}
-%	\label{tab:PipelineTableD}
-%end{table}
 
 
 \end{document}

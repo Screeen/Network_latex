@@ -3,12 +3,12 @@
 \usepackage{standalone}
 \input{pre}
 
-\author{Giovanni Bologni (\todo{?}) and Wouther Bons (4092716)}
+\author{Giovanni Bologni (4757386) and Wouther Bons (4092716)}
 \date{\today}
 \title{EE4389\\Modeling and Data Analysis in Complex Networks\\Assignment}
 \lhead{EE4389 Complex Networks Assignment} % Controls the left corner of the header
 \chead{} % Controls the center of the header
-\rhead{Giovanni Bologni and Wouther Bons} % Controls the right corner of the header
+%\rhead{Giovanni Bologni and Wouther Bons} % Controls the right corner of the header
 
 \begin{document}
 
@@ -22,6 +22,27 @@ This data not only includes contact information at a certain time, but also how 
 To begin with, this data will be aggregated over all time to analyse the topology of the resulting aggregated network. Secondly, the time of measurement will be taken into consideration. Several metrics will be used to analyse which nodes are most influential when information spreads across this temporal network. Lastly, temporal features of the network will be altered to inspect their influence on the information spreading process.
 
 \subsection*{Part A: Topological features of the aggregated network}
+
+
+%\setlength\LTleft{0pt} % left-align rather than center-set the longtable
+\begin{tabular}{l l}
+\textbf{Topological feature} & \textbf{Value} \\ 
+\midrule
+N & 327 \\
+L & 5818 \\ 
+p  & 0.1092 \\ 
+$E[D]$  & 35.58\\
+$Var[D]$ & 182.2 \\
+$\rho_D$ & 0.03318\\
+C & 0.5035\\
+$E[H]$ & 2.159\\
+$H_{max}$ & 4\\
+$\lambda_1$ & 41.23\\
+$\mu_{N-1}$ & 1.93\\
+\bottomrule
+\end{tabular}
+\bigskip
+
 The aggregated graph \(G\) is constructed by connecting any two nodes by an (unweighted) edge if the nodes make contact with eachother at least once in the \(T=7375\) timesteps available.
 
 \(G\) has \(N=327\) nodes and \(L=5818\) links. The link density is computed as
@@ -65,10 +86,69 @@ Lastly, some spectral metrics of the aggregated graph are considered. The spectr
 
 
 \subsection*{Part B: Information spreading on a temporal network}
-\todo{}
+9) Taking all the N iterations into count, plot the average number of infected nodes E[I(t)] together with
+its error bar (standard deviation pV ar[I(t)]) as a function of the time step t.
+
+\begin{figure}[ht!]
+  \centering
+   \includegraphics[width=\textwidth]{img/infections_G_data.png}
+   \caption{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$, 
+ on the temporal graph $G_{data}$. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area.}
+   \label{fig:infections_G}
+\end{figure}
+
+%\tiny{10) How influential a node is as a seed node could be partially reflected by, e.g. the time it takes to
+%reach/infect 80 of the total nodes when this node is selected as the seed node. The shorter the time is, the
+%more influential the seed node is. Using this standard to rank the influence of all the nodes and record the
+%ranking in a vector R , ri is the node index of the i − th most influential seed
+%node and R is the most influential node that infects 80 nodes in the shortest time. Note that you don’t
+%need to provide this vector in your report.
+%11) We are going to explore which nodal level network feature could well suggest the nodal influence discussed
+%in 10). Compute the degree and clustering coefficient of each node in the aggregated network G and rank the
+%importance of the nodes according to these two centrality metrics respectively. You obtain the ordered vector
+%D  is the node having the i − th highest degree
+%and C is the node with the i − th highest clustering coefficient. How precise a centrality metric e.g. the
+%degree could predict seed nodes’ influence could be quantified by the top f recognition rate rRD
+%where Rf and Df are the sets of nodes ranking in the top f fraction according to their influence and degree
+%respectively and jRfj = fN is the number of nodes in Rf . Plot rRD and rRCas a function of f where
+%f = 0:05; 0:1; 0:15; :::; 0:5. Which metric, the degree or the clustering coefficient could better predict the influence
+%of the nodes? Why?
+%12) Propose another two nodal/centrality features that could possibly well predict nodes’ influence. The
+%previous two features are all based on the aggregated network. At least one feature that you are going to
+%propose should take nodal temporal features into account. Compare the two features you proposed and the two
+%features proposed in question 11): which feature better/badly reflects how influential a node is and why? Hint:
+%Similar to 11) plot rRM (f) as a function of f for each metric M you proposed.
+%13) Reflection on B: What can be improved in the aforementioned analysis method to discover which nodal
+%feature could better reflect how influential a node is as a seed node?}
+
+\begin{figure}[ht!]
+  \centering
+   \includegraphics[width=0.8\textwidth]{img/rank_G.png}
+   \caption{The top $f$ recognition rate $r_RX(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$, where $R_f$ and $X_f$ are the sets of nodes ranking in the top $f$ fraction according to their influence,  or to another metric $X(f)$, respectively. The metrics based on the temporal features are more accurate in detecting the most influential seed nodes.}
+   \label{fig:rank_G}
+\end{figure}
 
 
 \subsection*{Part C: Influence of temporal network features on information spreading}
+% Construct the following three temporal networks. G2 is exactly the same as Gdata except that the time
+%stamps describing when each temporal link (contact) appears in Gdata are randomlized in G2. In other words,
+%G2 is constructed by copying all the temporal links from Gdata but their time stamps are randomly re-shuffled
+%or equivalently, randomly reassigned to the temporal links. The number of contacts between each node pair is
+%the same between Gdata and G2. [A time stamp vector v, whose length equals the number of contacts, can be
+%randomly reshuffled to a vector v2 by assigning each element in v to a randomly selected position in vector v2
+%while avoiding more than one elements from v assigned to the same position in v2].
+%G3 is constructed by the following steps: G∗ 3 has the same topology as G, which is an unweighted network.
+%Second, assign the time stamps in Gdata to the linked node pairs (links) in G∗ 3, randomly. A link in G∗ 3 may
+%receive more than one time stamps, meaning that the two nodes contact more than once. A link G∗ 3 receives no
+%time stamp means that there is no contact between the corresponding two nodes. G3 is composed of all these
+%contacts.
+%15) Simulate exactly the same information spreading process on G2 and G3 as described in B. On each
+%temporal network, N iterations of the spreading processes are simulated and each iteration starts at a different
+%seed node. Plot the average number of infected nodes E[I(t)] and the standard deviation pV ar[I(t)] as a
+%function of the time step t for Gdata, G2 and G3 respectively. Compare and rank the information spreading
+%performance (e.g. prevalence or speed of the spread) on these three temporal networks. Interpret/explain
+%your observation. For example, which temporal network features could possibly explain the different spreading
+%performance on these temporal networks?
 \todo{}
 
 

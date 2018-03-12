@@ -94,7 +94,7 @@ Because the clustering coefficient on the aggregated graph is more than 4 times 
 
 Comparing the average hopcount (\(E[H]=2.159\)) with the diameter of the graph (\(H_{max}=4\)) we see that there is not a lot of variance in hopcounts of shortest paths between nodes; the diameter (the worst-case hopcount of shortest paths) is close to the graph's efficiency (the average hopcount). This again points to the small-world property.
 
-Lastly, some spectral metrics of the aggregated graph are considered. The spectral radius is calculated as the largest eigenvalue of the adjacency matrix \(\lambda_1=41.23\). The algebraic connectivity is the second smallest eigenvalue of not the adjacency but the Laplacian matrix, \(\mu_{N-1}=1.930 > 1\). This ensures that the graph is connected.
+Lastly, some spectral metrics of the aggregated graph are considered. The spectral radius is calculated as the largest eigenvalue of the adjacency matrix \(\lambda_1=41.23\). The algebraic connectivity is the second smallest eigenvalue of not the adjacency but the Laplacian matrix, \(\mu_{N-1}=1.930 > 1\). This ensures that the graph is connected; as a consequence, we shall see in Part B that all the nodes from the graph contract the infection, no matter what node will be chosen to start the infection propagation.
 
 
 \subsection*{Part B: Information spreading on a temporal network}
@@ -136,7 +136,7 @@ Figure \ref{fig:rankG} shows the results of these temporal metrics on the graph 
 \begin{figure}[ht]
   \centering
    \includegraphics[width=0.7\textwidth]{img/rankG.png}
-   \caption{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$, where $R_f$ and $X_f$ are the sets of nodes ranking in the top $f$ fraction according to their influence,  or to another metric $X(f)$, respectively. The metrics based on the temporal features, TD and XTD, are more accurate in detecting the most influential seed nodes.}
+   \caption{\small{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$, where $R_f$ and $X_f$ are the sets of nodes ranking in the top $f$ fraction according to their influence,  or to another metric $X(f)$, respectively. The metrics based on the temporal features, TD and XTD, are more accurate in detecting the most influential seed nodes.}}
    \label{fig:rankG}
 \end{figure}
 
@@ -154,32 +154,30 @@ One caveat of using the top-f recognition rate is that it artifically separates 
 
 \subsection*{Part C: Influence of temporal network features on information spreading}
 \label{sec:partC}
-% Construct the following three temporal networks. G2 is exactly the same as Gdata except that the time
-%stamps describing when each temporal link (contact) appears in Gdata are randomlized in G2. In other words,
-%G2 is constructed by copying all the temporal links from Gdata but their time stamps are randomly re-shuffled
-%or equivalently, randomly reassigned to the temporal links. The number of contacts between each node pair is
-%the same between Gdata and G2. [A time stamp vector v, whose length equals the number of contacts, can be
-%randomly reshuffled to a vector v2 by assigning each element in v to a randomly selected position in vector v2
-%while avoiding more than one elements from v assigned to the same position in v2].
-%G3 is constructed by the following steps: G∗ 3 has the same topology as G, which is an unweighted network.
-%Second, assign the time stamps in Gdata to the linked node pairs (links) in G∗ 3, randomly. A link in G∗ 3 may
-%receive more than one time stamps, meaning that the two nodes contact more than once. A link G∗ 3 receives no
-%time stamp means that there is no contact between the corresponding two nodes. G3 is composed of all these
-%contacts.
-%15) Simulate exactly the same information spreading process on G2 and G3 as described in B. On each
-%temporal network, N iterations of the spreading processes are simulated and each iteration starts at a different
-%seed node. Plot the average number of infected nodes E[I(t)] and the standard deviation pV ar[I(t)] as a
-%function of the time step t for Gdata, G2 and G3 respectively. Compare and rank the information spreading
-%performance (e.g. prevalence or speed of the spread) on these three temporal networks. Interpret/explain
-%your observation. For example, which temporal network features could possibly explain the different spreading
-%performance on these temporal networks?
-\todo{}
+
+In Part A, several topological features of the aggregated graph \(G\) were evaluated. 
+It was shown how \(G\) has the typical connectivity properties of a Watts-Strogatz graph, while the degree distribution resembles a Poisson distribution, as in the ER graph. 
+In Part B, we simulated an infection process and ranked the nodes according to the propagation rate. Moreover, several temporal and non-temporal metrics were proposed to predict the influence of the seed nodes.
+
+\noindent Let us now consider the information spreading process on two randomized graphs:
+\begin{itemize}
+\item \(G_2\), which has the same temporal links as \(G_{data}\), while the time stamps are reshuffled,
+\item \(G_3\), that is obtained by randomizing and aggregating the original graph \(G\).
+%  with the timestamps randomly redistributed across the edges.
+\end{itemize}
+
+\noindent The average number of infected nodes per time stamp on the graphs \(G_{data}\), \(G_2\) and \(G_3\) is plotted in fig.~\ref{fig:infections_over_time}. 
+
+\noindent The infection spread in the shuffled graph, \(G_2\), is significantly faster then in the original graph. A likely explanation is that the rewiring process, while leaving the degrees on the aggregated graph untouched, changes drastically the order in which the links are formed. Therefore, the typical causality of the real-world data is lost: whereas two connected nodes in \(G_{data}(t)\) were very likely to be connected in \(G_{data}(t+1)\), the edges in \(G_2(t)\) are completely independent from the edges in \(G_2(t+1)\), thus contributing to the infection spread.
+These interpretations are quantitatively supported by fig.~\ref{fig:degree_distribution}, which shows the amount of new nodes appearing in the temporal graphs at the beginning of the infection spread. 
+
+Similarly, all the nodes in \(G_3\) get infected after a relatively short time, with low variance.
 
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{img/infections_G.png}
-        \caption{Graph \(G\)}
+        \caption{Graph \(G_{data}\)}
 	    \label{fig:infections_over_time_G}
     \end{subfigure}
 %    ~ % spacing
@@ -194,7 +192,7 @@ One caveat of using the top-f recognition rate is that it artifically separates 
         \caption{Graph \(G_3\)}
 	    \label{fig:infections_over_time_G3}
     \end{subfigure}
-    \caption{\small{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$ on several temporal graphs. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area.}}
+    \caption{\small{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$ on several temporal graphs. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area. The propagation speed increases when the original graph is reshuffled.}}
     \label{fig:infections_over_time}
 	
 	\bigskip
@@ -202,7 +200,7 @@ One caveat of using the top-f recognition rate is that it artifically separates 
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{img/rankG.png}
-        \caption{Graph \(G\)}
+        \caption{Graph \(G_{data}\)}
 	    \label{fig:recognition_rates_G}
     \end{subfigure}
 %    ~ % spacing
@@ -217,7 +215,7 @@ One caveat of using the top-f recognition rate is that it artifically separates 
         \caption{Graph \(G_3\)}
 	    \label{fig:recognition_rates_G3}
     \end{subfigure}
-    \caption{\small{Degree distribution of nodes in the aggregated graph.}}
+    \caption{\small{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$ for different metrics, evaluated on the three temporal graphs. All the proposed metrics seem inappropriate to detect the most influential spreaders on the randomized graphs, being just above chance performance.}}
     \label{fig:recognition_rates}
 	
 	\bigskip
@@ -225,7 +223,7 @@ One caveat of using the top-f recognition rate is that it artifically separates 
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \includegraphics[width=\textwidth]{img/newNodesG.png}
-        \caption{Graph \(G\)}
+        \caption{Graph \(G_{data}\)}
 	    \label{fig:degree_distribution_G}
     \end{subfigure}
 %    ~ % spacing
@@ -240,17 +238,9 @@ One caveat of using the top-f recognition rate is that it artifically separates 
         \caption{Graph \(G_3\)}
 	    \label{fig:degree_distribution_G3}
     \end{subfigure}
-    \caption{\small{Degree distribution of nodes in several graphs. \(G\) is the aggregated graph from the dataset (see part~\ref{sec:partA}), \(G_2\) is \(G\) but with the timestamps of edges shuffled and \(G_3\) is \(G\) but with the timestamps randomly redistributed across the edges. For details, see part~\ref{sec:partC}.}}
+    \caption{\small{Number of new nodes added to the graph at timestamp \(t\). 
+    The plots focuse on the initial phase of the spreading process: the x-axis ranges from 0 to \(T=100\). It is apparent how the two randomized graphs, \(G_2\) and \(G_3\), get connected to a larger number of previously unseen nodes, thus contributing to the infection spread. }}
     \label{fig:degree_distribution}
 \end{figure}
-
-newNodesG
-
-
-\subsection*{Conclusion}
-\todo{}
-
-
-
 
 \end{document}

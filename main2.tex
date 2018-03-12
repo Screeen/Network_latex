@@ -45,7 +45,7 @@ All measured topological features are summarized in table \ref{tab:topological_f
 	Algebraic connectivity& $\mu_{N-1}$ & 1&.93\\
 	\bottomrule
 	\end{tabular}
-	\caption{List of all topological features of the aggregated network that were examined. For details on calculations and interpretations see part \ref{sec:partA}.}
+	\caption{List of all topological features of the aggregated network that were examined. For details on calculations and interpretations see part A.} % quickfix--reference broken for some reason
 	\label{tab:topological_features}
 \end{table}
 
@@ -57,7 +57,7 @@ The link density is computed as
 p = \frac{L}{L_{max}} = \frac{L}{N(N-1)/2} = 0.1092
 \end{align*}
 
-Several metrics inspect the degree of nodes in the network, of which an insightful one is the degree distribution. From fig.~\ref{fig:degree_distribution_linlin}, it can be seen that this distribution resembles a Poisson distribution. This suggests that an Erdös-Renyi (ER) graph model would be well suited to model the face-to-face contact network. In contrast, a scale-free graph model would be a bad choice of model because scale-free graphs show a linear distribution when viewed on a log-log scale and this is absolutely not the case (fig.~\ref{fig:degree_distribution_loglog}).
+Several metrics inspect the degree of nodes in the network, of which an insightful one is the degree distribution. From figure \ref{fig:degree_distribution_linlin} it can be seen that this distribution resembles a Poisson distribution. This suggests that an Erdös-Renyi (ER) graph model would be well suited to model the face-to-face contact network. In contrast, a scale-free graph model would be a bad choice of model because scale-free graphs show a linear distribution when viewed on a log-log scale and this is absolutely not the case (fig.~\ref{fig:degree_distribution_loglog}).
 
 The degree assortativity (\(\rho_D=0.03318\)) is defined as the (linear) correlation coefficient between the degrees of nodes. A high degree assortativity indicates that two nodes are more likely to be connected if their degrees are similar, while a value of almost zero, as in our case, means the degrees of nodes are not correlated at all.  
 This means that the creation of new links in the aggregated graph is not influenced by existing links; another argument for using the ER graph model, where edges are created with independent probabilities (and are therefore uncorrelated).
@@ -79,7 +79,7 @@ This means that the creation of new links in the aggregated graph is not influen
     \label{fig:degree_distribution_aggregated}
 \end{figure}
 
-Furthermore, it is interesting to check whether the network exhibits the small-world property, i.e. if it the nodes are strongly clustered and the average distance among them is only a few hops. 
+Furthermore, it is interesting to check whether the network exhibits the small-world property, i.e. if the nodes are strongly clustered and the average distance among them is only a few hops. 
 Comparing the clustering coefficient (\(C=0.5035\)) and average hopcount (\(E[H]=2.159\)) to the same metrics evaluated on a regular graph (with a similar average degree) results in the following ratios: 
 
 \begin{align*}
@@ -87,18 +87,19 @@ C/C(0) = 4.681\\
 E[H]/E[H](0) = 1.132
 \end{align*}
 
-Because the clustering coefficient on the aggregated graph is more than 4 times higher then in the regular graph, while the average hopcounts are comparable in the two graphs, the network exhibits the small-world property. 
+\clearpage % layout mierenneuken
+Because the clustering coefficient on the aggregated graph is multiple times higher than in the regular graph, while the average hopcounts are comparable in the two graphs, the network exhibits the small-world property. 
 
 Comparing the average hopcount (\(E[H]=2.159\)) with the diameter of the graph (\(H_{max}=4\)) we see that there is not a lot of variance in hopcounts of shortest paths between nodes; the diameter (the worst-case hopcount of shortest paths) is close to the graph's efficiency (the average hopcount). This again points to the small-world property.
 
-Lastly, some spectral metrics of the aggregated graph are considered. The spectral radius is calculated as the largest eigenvalue of the adjacency matrix \(\lambda_1=41.23\). The algebraic connectivity is the second smallest eigenvalue of not the adjacency but the Laplacian matrix, \(\mu_{N-1}=1.930 > 1\). This ensures that the graph is connected; as a consequence, we shall see in Part B that all the nodes from the graph contract the infection, no matter what node will be chosen to start the infection propagation.
+Lastly, some spectral metrics of the aggregated graph are considered. The spectral radius is calculated as the largest eigenvalue of the adjacency matrix \(\lambda_1=41.23\). The algebraic connectivity is the second smallest eigenvalue of not the adjacency but the Laplacian matrix, \(\mu_{N-1}=1.930 > 1\). This ensures that the graph is connected; as a consequence, we shall see in Part B that information spreads to all the nodes no matter what node will be chosen to start the information spreading process.
 
 
 \subsection*{Part B: Information spreading on a temporal network}
 
-As mentioned in the introduction, each edge was labeled with the timestamp at which the contact between students it represents was made. This means we can simulate the spread of information over the time network \(G_{data}\) over time. 
+As mentioned in the introduction, each edge was labeled with the timestamp at which the contact between students it represents was made. This means we can simulate the spread of information over the temporal network \(G_{data}\) over time. 
 The information spreading process used is as follows: an infected node can infect any nodes it is in contact with (i.e. its neighbours at a specific timestamp), but these neighbours can only start infecting other nodes at the next timestamp. Infection starts with some selected seed node. 
-This simulation is done N times; every node is a seed node once. Graphs of the number of infected nodes \(I(t)\) (fig.~\ref{fig:infections_G}) shows the average \(E[I(t)]\) as well as the standard deviation \(\sqrt{Var[I(t)]}\) over these N simulations.
+This simulation is done N times; every node is a seed node once. Figure~\ref{fig:infections_G} shows the number of infected nodes \(I(t)\) over time by plotting the average \(E[I(t)]\) and the standard deviation \(\sqrt{Var[I(t)]}\) over these N simulations.
 \begin{figure}[ht!]
   \centering
    \includegraphics[width=0.65\textwidth]{img/infections_G.png}
@@ -118,42 +119,44 @@ One metric used to quantify how fast information spreads over the temporal netwo
 	XTD_i &= 
 		\begin{cases}
 		\frac{D_i}{t}& \text{if node connected to new neighbours at this timestamp,}\\
-		0& otherwise,
+		0& \text{otherwise},
 		\end{cases}
 \end{align*}
 \noindent where \(D_i\) is the degree of the \(i\)-th node.
 
-The reasoning behind these metrics is that earlier contacts are more influential than later ones. For example, at later timestamps a significant part of contacts happen between infected nodes, thus not contributing to the infection spread. The temporal degree (TD) tries to account for this reduced nodal influence at later timestamps by weighting the degree with something inversely propertional to the timestamp. 
+The reasoning behind these metrics is that earlier contacts are more influential than later ones. For example, at later timestamps a significant part of contacts happen between already infected nodes, thus not contributing to the infection spread. The temporal degree (TD) tries to account for this reduced nodal influence at later timestamps by weighting the degree with something inversely propertional to the timestamp. 
 Additionally, the exclusive temporal degree (XTD) discards (i.e. zero weight) any repeated contact between nodes.
 
 Figure \ref{fig:rankG} shows the results of these temporal metrics on the graph \(G_{data}\), as well as several non-temporal ones, evaluated on \(G\). 
 
-\begin{figure}[ht]
+Because the comparison is done as a fraction the ideal metric would yield a unity recognition rate, i.e. ranking nodes' influence using that metric yields exactly the same results as ranking by 80\% infection timestamps (R).
+%Therefore a value closer to unity in figure~\ref{fig:rankG} means a better metric.
+With this in mind, it is clear that both temporal metrics perform better than non-temporal ones, which is to be expected as they use more information.
+
+Furthermore, a linear recognition rate with unit slope means that using the metric to rank nodal influence performs the same as tossing a coin, e.g. if 40\% of nodes in the top-40\% match with R.
+Therefore figure~\ref{fig:rankG} shows that neither the degree, clustering coefficient nor betweenness of the aggregated graph are significantly better than random chance at predicting nodal influence.
+
+\begin{figure}[h!]
   \centering
-   \includegraphics[width=0.7\textwidth]{img/rankG.png}
+   \includegraphics[width=0.8\textwidth]{img/rankG.png}
    \caption{\small{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$, where $R_f$ and $X_f$ are the sets of nodes ranking in the top $f$ fraction according to their influence,  or to another metric $X(f)$, respectively. The metrics based on the temporal features, TD and XTD, are more accurate in detecting the most influential seed nodes.}}
    \label{fig:rankG}
 \end{figure}
 
-Because the comparison is done as a fraction the ideal metric would yield a unity recognition rate, i.e. ranking nodes' influence using that metric yields exactly the same results as ranking by 80\% infection timestamps (R). 
-On the other side, a linear recognition rate with unit slope means that using the metric to rank nodal influence performs the same as tossing a coin, e.g. if 40\% of nodes in the top-40\% match with R.
-%Therefore a value closer to unity in figure~\ref{fig:rankG} means a better metric. 
-
-With this in mind, it is clear that both temporal metrics perform better than non-temporal ones, which is to be expected as they use more information.
-It should be noted, however, that neither the degree, clustering coefficient nor betweenness of the aggregated graph are significantly better than random chance at predicting nodal influence.
-
 % question 13:
 %\todo{not really sure about this... even though it's beautifully written, it's really long and not strictly necessary, since we're considering only big networks. Maybe you can find a way to cut it?}
-One caveat of using the top-f recognition rate is that it artifically separates nodes for which a metric has the same value. For example, consider a small graph of five nodes, where node 1 through 4 all have degree 1 and node 5 has a higher degree. The ranking nodes by degree could then be any permutation of nodes 1 through 4, followed by 5, e.g. \(D=[D_{(1)},D_{(2)},D_{(3)},D_{(4)},D_{(5)}]\) or \(D=[D_{(2)},D_{(4)},D_{(1)},D_{(3)},D_{(5)}]\). The top-f recognition rate then depend on the permutation of nodes with equal degree, while in reality the nodes perform equally well and should theoretically all four "share" first place. This effect is neglegible for very large networks but is important to take into consideration when using top-f recognition rates for smaller networks.
+\bigskip
+\noindent One caveat of using the top-f recognition rate is that it artificially separates nodes for which a metric results the same value. For example, consider a small graph of five nodes, where node 1 through 4 all have degree 1 and node 5 has a higher degree. The ranking of nodes by degree could then be any permutation of nodes 1 through 4, followed by 5, e.g. \(D=[D_{(1)},D_{(2)},D_{(3)},D_{(4)},D_{(5)}]\) or \(D=[D_{(2)},D_{(4)},D_{(1)},D_{(3)},D_{(5)}]\). The top-f recognition rate then depends on the permutation of nodes with equal degree, while in reality the nodes perform equally well and should theoretically all four "share" first place. This effect is neglegible for very large networks but is important to take into consideration when using top-f recognition rates for smaller networks.
 
-
+\pagebreak
 \subsection*{Part C: Influence of temporal network features on information spreading}
 \label{sec:partC}
 
 In Part A, several topological features of the aggregated graph \(G\) were evaluated. 
-It was shown how \(G\) has the typical connectivity properties of a Watts-Strogatz graph, while the degree distribution resembles a Poisson distribution, as in the ER graph. 
-In Part B, we simulated an infection process and ranked the nodes according to the propagation rate. Moreover, several temporal and non-temporal metrics were proposed to predict the influence of the seed nodes.
+It was shown how \(G\) has the typical connectivity properties of a Watts-Strogatz small-world graph, while the degree distribution resembles a Poisson distribution, as in the ER graph. 
+In Part B, we simulated an information spreading process and ranked the nodes according to the propagation rate. Moreover, several temporal and non-temporal metrics were proposed to predict the influence of the seed nodes.
 
+\bigskip
 \noindent Let us now consider the information spreading process on two randomized graphs:
 \begin{itemize}
 \item \(G_2\), which has the same temporal links as \(G_{data}\), while the time stamps are reshuffled,
@@ -161,15 +164,16 @@ In Part B, we simulated an infection process and ranked the nodes according to t
 %  with the timestamps randomly redistributed across the edges.
 \end{itemize}
 
-\noindent The average numbers of infected nodes per time stamp on the graphs \(G_{data}\), \(G_2\) and \(G_3\) are plotted in fig.~\ref{fig:infections_over_time}. 
+\noindent The average number of infected nodes per time stamp on the graphs \(G_{data}\), \(G_2\) and \(G_3\) are shown in figure~\ref{fig:infections_over_time}.
 
-\noindent The infection spread in the shuffled graph, \(G_2\), is significantly faster than in the original graph. A likely explanation is that the rewiring process, while leaving the degrees on the aggregated graph untouched, changes drastically the order in which the links are formed. Therefore, the typical causality of the real-world data is lost: whereas two connected nodes in \(G_{data}(t)\) were very likely to be connected in \(G_{data}(t+1)\), the edges in \(G_2(t)\) are completely independent from the edges in \(G_2(t+1)\), thus contributing to the infection spread.
-These interpretations are quantitatively supported by fig.~\ref{fig:degree_distribution}, which shows the amount of new nodes appearing in the temporal graphs at the beginning of the infection spread. 
+It can be seen that the infection spread in the shuffled graph, \(G_2\), is significantly faster than in the original graph. A likely explanation is that the rewiring process, while leaving the degrees on the aggregated graph untouched, changes drastically the order in which the links are formed. Therefore, the typical causality of the real-world data is lost: whereas two connected nodes in \(G_{data}(t)\) were very likely to be connected in \(G_{data}(t+1)\), the edges in \(G_2(t)\) are completely independent from the edges in \(G_2(t+1)\), thus contributing to the infection spread.
+These interpretations are quantitatively supported by figure~\ref{fig:degree_distribution}, which shows the amount of new nodes appearing in the temporal graphs at the beginning of the infection spread. 
 
 Similarly, all the nodes in \(G_3\) get infected after a relatively short time, with low variance.
 \(G_3\) is constructed by first taking a copy of the aggregated graph \(G\), where all the edges only appear once, then randomizing the edges and then aggregating the resulting graph. This way, some edges disappear together with the linked nodes, since they are not assigned any time stamp.
 
-The metrics proposed in Part B do not reliably predict the most influential seed nodes in \(G_2\) and \(G_3\) (fig.~\ref{fig:recognition_rates}. An alternative performance measure could take into account the number of new neighbours of a node in a time window. As an example, the activity potential of a node is defined as the number of interactions that the node had in a given time window, divided by the total number of interactions made by all nodes during the same time slot.
+\bigskip
+\noindent The metrics proposed in Part B do not reliably predict the most influential seed nodes in \(G_2\) and \(G_3\) (fig.~\ref{fig:recognition_rates}). An alternative performance measure could take into account the number of new neighbours of a node in some time window. As an example, the activity potential of a node is defined as the number of interactions that the node had in a given time window, divided by the total number of interactions made by all nodes during the same period.
 On the other hand, when we are interested in the global behaviour of a graph, recent studies suggest that spectral metrics seem to be essential in network characterizations. 
 
 \begin{figure}
@@ -191,7 +195,7 @@ On the other hand, when we are interested in the global behaviour of a graph, re
         \caption{Graph \(G_3\)}
 	    \label{fig:infections_over_time_G3}
     \end{subfigure}
-    \caption{\small{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$ on several temporal graphs. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area. The propagation speed increases when the original graph is reshuffled.}}
+    \caption{\small{The average number of infected nodes as a function of the time step, $\mathrm{E}[I(t)]$ on several temporal graphs. The standard deviation, $\sqrt{\mathrm{Var}{[I(t)}]}$ is indicated by the shaded area. Note that the propagation speed increases when the original graph is reshuffled.}}
     \label{fig:infections_over_time}
 	
 	\bigskip
@@ -214,7 +218,7 @@ On the other hand, when we are interested in the global behaviour of a graph, re
         \caption{Graph \(G_3\)}
 	    \label{fig:recognition_rates_G3}
     \end{subfigure}
-    \caption{\small{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$ for different metrics, evaluated on the three temporal graphs. All the proposed metrics seem inappropriate to detect the most influential spreaders on the randomized graphs, being just above chance performance.}}
+    \caption{\small{The top $f$ recognition rate $r_{RX}(f) = \frac{ |R_f \cap X_f| }{ |R_f| }$ for different metrics, evaluated on the three temporal graphs. All the proposed metrics seem inappropriate to detect the most influential spreaders on the randomized graphs, being just above random chance performance. See part B for details.}}
     \label{fig:recognition_rates}
 	
 	\bigskip
@@ -238,7 +242,7 @@ On the other hand, when we are interested in the global behaviour of a graph, re
 	    \label{fig:degree_distribution_G3}
     \end{subfigure}
     \caption{\small{Number of new nodes added to the graph at timestamp \(t\). 
-    The plots focuse on the initial phase of the spreading process: the x-axis ranges from 0 to \(T=100\). It is apparent how the two randomized graphs, \(G_2\) and \(G_3\), get connected to a larger number of previously unseen nodes, thus contributing to the infection spread. }}
+    The plots focus on the initial phase of the spreading process: the horizontal axis ranges from \(0\) to \(t=100\). It is apparent how the two randomized graphs, \(G_2\) and \(G_3\), get connected to a larger number of previously unseen nodes, thus contributing to the infection spread.}}
     \label{fig:degree_distribution}
 \end{figure}
 
